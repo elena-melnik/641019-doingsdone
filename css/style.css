@@ -505,7 +505,7 @@ a:focus {
 }
 
 .tasks__item td {
-  padding: 20px 0;
+  padding: 20px 5px;
 
   border-bottom: 1px solid #d7dbe8;
 }
@@ -524,7 +524,8 @@ a:focus {
 }
 
 .task--completed .task__file,
-.task--completed .task__date {
+.task--completed .task__date,
+.task--completed .task__category {
   opacity: 0.2;
 }
 
@@ -552,6 +553,7 @@ a:focus {
   position: relative;
 
   width: 476px;
+  padding-left: 0;
 }
 
 .task__file {
@@ -560,6 +562,10 @@ a:focus {
 
 .task__date {
   width: 80px;
+}
+
+.task__category {
+  width: 276px;
 }
 
 .task__controls {
