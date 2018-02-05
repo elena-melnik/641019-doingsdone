@@ -6,37 +6,37 @@ $task_categories = ["Все", "Входящие", "Учеба", "Работа", 
 // двумерный массив, каждый элемент которого содержит ассоциативный массив
 $task_list = [
     [
-        'task' => 'Собеседование в IT компании',
+        'task_name' => 'Собеседование в IT компании',
         'deadline' => '01.06.2018',
         'category' => 'Работа',
         'is_done' => false
     ],
     [
-        'task' => 'Выполнить тестовое задание',
+        'task_name' => 'Выполнить тестовое задание',
         'deadline' => '25.05.2018',
         'category' => 'Работа',
         'is_done' => false
     ],
     [
-        'task' => 'Сделать задание первого раздела',
+        'task_name' => 'Сделать задание первого раздела',
         'deadline' => '21.04.2018',
         'category' => 'Учеба',
         'is_done' => true
     ],
     [
-        'task' => 'Встреча с другом',
+        'task_name' => 'Встреча с другом',
         'deadline' => '22.04.2018',
         'category' => 'Входящие',
         'is_done' => false
     ],
     [
-        'task' => 'Купить корм для кота',
+        'task_name' => 'Купить корм для кота',
         'deadline' => '-',
         'category' => 'Домашние дела',
         'is_done' => false
     ],
     [
-        'task' => 'Заказать пиццу',
+        'task_name' => 'Заказать пиццу',
         'deadline' => '-',
         'category' => 'Домашние дела',
         'is_done' => false
@@ -87,10 +87,10 @@ $task_list = [
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                         <!-- Заменить содержимое списка данными из массива $task_categories -->
-                        <?php foreach ($task_categories as $key => $val): ?>
+                        <?php foreach ($task_categories as $index => $category): ?>
                             <!-- Первый элемент списка должен дополнительно иметь класс .main-navigation__list-item--active -->
-                            <li class="main-navigation__list-item <?= ($key == 0)? ' main-navigation__list-item--active' : '' ?>">
-                                <a class="main-navigation__list-item-link" href="#"><?=$val; ?></a>
+                            <li class="main-navigation__list-item <?= ($index == 0)? ' main-navigation__list-item--active' : '' ?>">
+                                <a class="main-navigation__list-item-link" href="#"><?=$category; ?></a>
                                 <span class="main-navigation__list-item-count">3</span>
                             </li>
                         <?php endforeach; ?>
@@ -127,20 +127,20 @@ $task_list = [
 
                 <table class="tasks">
                     <!-- Заменить все содержимое этой таблицы данными из массива задач $task-list -->
-                    <?php foreach ($task_list as $key => $val): ?>
+                    <?php foreach ($task_list as $task): ?>
                         <!-- Если у задачи статус "выполнен", то строке с этой задачей добавить класс "task--completed" -->
-                        <tr class="tasks__item <?= ($val['is_done'] == true)? ' task--completed' : '' ?>">
+                        <tr class="tasks__item <?= ($task['is_done'] == true)? ' task--completed' : '' ?>">
                             <td class="task__select">
                                 <label class="checkbox task__checkbox">
                                     <!--добавить input-у аттрибут "checked", если у задачи статус "выполнен" -->
-                                    <input class="checkbox__input visually-hidden" type="checkbox" <?= ($val['is_done'] == true)? ' checked' : '' ?>>
-                                    <span class="checkbox__text"><?=$val['task']; ?></span>
+                                    <input class="checkbox__input visually-hidden" type="checkbox" <?= ($task['is_done'] == true)? ' checked' : '' ?>>
+                                    <span class="checkbox__text"><?=$task['task_name']; ?></span>
                                 </label>
                             </td>
 
-                            <td class="task__category"><?=$val['category']; ?></td>
+                            <td class="task__category"><?=$task['category']; ?></td>
 
-                            <td class="task__date"><?=$val['deadline']; ?></td>
+                            <td class="task__date"><?=$task['deadline']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
