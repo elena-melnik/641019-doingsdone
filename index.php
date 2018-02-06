@@ -44,23 +44,23 @@ $task_list = [
 ];
 
 // Функция подсчета задач в массиве по переданному аргументу - имени категории 
-function calc_tasks($tasks_array, $category_name) {
+function getCategoryTasksQuantity($tasks_array, $category_name) {
 
-    $index = 0;
+    $quantity = 0;
 
     // Итерация по массиву, посчитать сколько его элементов относятся к проекту из аргумента $category_name.
     foreach ($tasks_array as $array_item) {
         if ($array_item['category'] == $category_name) {
-            $index++;
+            $quantity++;
         }
     }
 
     // Если аргумент $category_name равен строке "Все", то вернуть общее число задач в массиве.
     if ($category_name == 'Все') {
-        $index = count($tasks_array);
+        $quantity = count($tasks_array);
     }
 
-    return $index;
+    return $quantity;
 }
 ?>
 
@@ -112,7 +112,7 @@ function calc_tasks($tasks_array, $category_name) {
                             <!-- Первый элемент списка должен дополнительно иметь класс .main-navigation__list-item--active -->
                             <li class="main-navigation__list-item <?= ($index == 0)? ' main-navigation__list-item--active' : '' ?>">
                                 <a class="main-navigation__list-item-link" href="#"><?=$category; ?></a>
-                                <span class="main-navigation__list-item-count"><?=$list_item_count=calc_tasks($task_list, $category); ?></span>
+                                <span class="main-navigation__list-item-count"><?=$list_item_count=getCategoryTasksQuantity($task_list, $category); ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
