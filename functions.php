@@ -28,16 +28,13 @@ function filterText($string) {
 }
 
 // Функция-шаблонизатор
-function includeTemplate($template_file, $template_data_array) {
-    ob_start();
-    extract($template_data_array);
+function renderTemplate($template_path, $template_data) {
 
-    if (file_exists($template_file)) {
-        $file_content = require_once($template_file);
-    } else {
-        $file_content = '';
+    if (file_exists($template_path)) {
+        extract($template_data);
+        ob_start();
+        require_once $template_path;
+        return ob_get_clean();
     }
-
-    $file_content = ob_get_clean();
-    return $file_content;
+    return '';
 }
