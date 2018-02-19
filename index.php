@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Moscow');
+
 // Подключение файла с функциями
 require_once('functions.php');
 
@@ -27,19 +29,19 @@ $task_list = [
     ],
     [
         'task_name' => 'Встреча с другом',
-        'deadline' => '22.04.2018',
+        'deadline' => '20.02.2018',
         'category' => 'Входящие',
         'is_done' => false
     ],
     [
         'task_name' => 'Купить корм для кота',
-        'deadline' => '-',
+        'deadline' => '',
         'category' => 'Домашние дела',
         'is_done' => false
     ],
     [
         'task_name' => 'Заказать пиццу',
-        'deadline' => '-',
+        'deadline' => '',
         'category' => 'Домашние дела',
         'is_done' => false
     ],
