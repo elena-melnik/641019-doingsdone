@@ -3,6 +3,7 @@ date_default_timezone_set('Europe/Moscow');
 
 // Подключение файла с функциями
 require_once('functions.php');
+define ('SECONDS_IN_DAY', 86400);
 
 // простой массив проектов
 $task_categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
