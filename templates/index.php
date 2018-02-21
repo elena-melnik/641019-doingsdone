@@ -24,8 +24,8 @@
 
 <table class="tasks">
     <!-- Заменить все содержимое этой таблицы данными из массива задач $task-list -->
+    <? $current_timestamp = time(); ?>
     <?php foreach ($task_list as $task):
-            $current_timestamp = time();
             if ($task['deadline'] != '') {
                 $deadline_timestamp = strtotime($task['deadline']);
                 $days_to_deadline = floor(($deadline_timestamp - $current_timestamp) / SECONDS_IN_DAY);
