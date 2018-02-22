@@ -24,9 +24,15 @@
 
 <table class="tasks">
     <!-- Заменить все содержимое этой таблицы данными из массива задач $task-list -->
-    <?php foreach ($task_list as $task): ?>
+    <? $current_timestamp = time(); ?>
+    <?php foreach ($task_list as $task):
+            if ($task['deadline'] != '') {
+                $deadline_timestamp = strtotime($task['deadline']);
+                $days_to_deadline = floor(($deadline_timestamp - $current_timestamp) / SECONDS_IN_DAY);
+            }
+        ?>
         <!-- Если у задачи статус "выполнен", то строке с этой задачей добавить класс "task--completed" -->
-        <tr class="tasks__item <?= ($task['is_done'] == true)? ' task--completed' : '' ?>">
+        <tr class="tasks__item <?= ($task['is_done'] == true)? ' task--completed' : '' ?> <?= (($task['deadline'] != '') && ($days_to_deadline <= 1))? ' task--important' : '' ?>">
             <td class="task__select">
                 <label class="checkbox task__checkbox">
                     <!--добавить input-у аттрибут "checked", если у задачи статус "выполнен" -->
