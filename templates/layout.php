@@ -40,12 +40,12 @@
                 <h2 class="content__side-heading">Проекты</h2>
 
                 <nav class="main-navigation">
+                    <!-- Заменить содержимое списка данными из массива $task_categories -->
                     <ul class="main-navigation__list">
-                        <!-- Заменить содержимое списка данными из массива $task_categories -->
+                        <!-- Первый элемент списка должен дополнительно иметь класс .main-navigation__list-item--active -->
                         <?php foreach ($task_categories as $index => $category): ?>
-                            <!-- Первый элемент списка должен дополнительно иметь класс .main-navigation__list-item--active -->
-                            <li class="main-navigation__list-item <?= ($index == 0)? ' main-navigation__list-item--active' : '' ?>">
-                                <a class="main-navigation__list-item-link" href="#"><?=filterText($category); ?></a>
+                            <li class="main-navigation__list-item <?= (!isset($_GET['task_id'])  && $category == 'Все')? ' main-navigation__list-item--active' : '' ?> <?= (isset($_GET['task_id']) && ($_GET['task_id']) == $category)? ' main-navigation__list-item--active' : '' ?>">
+                                <a class="main-navigation__list-item-link" href="index.php?task_id=<?=$category;?>"><?=filterText($category); ?></a>
                                 <span class="main-navigation__list-item-count"><?=getCategoryTasksQuantity($task_list, $category); ?></span>
                             </li>
                         <?php endforeach; ?>

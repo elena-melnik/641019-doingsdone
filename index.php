@@ -3,7 +3,6 @@ date_default_timezone_set('Europe/Moscow');
 
 // Подключение файла с функциями
 require_once('functions.php');
-define ('SECONDS_IN_DAY', 86400);
 
 // простой массив проектов
 $task_categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
@@ -48,8 +47,46 @@ $task_list = [
     ],
 ];
 
+define ('SECONDS_IN_DAY', 86400);
+$current_timestamp = time();
+// Выявление задач, до даты выполнения которых осталось меньше одного дня.
+foreach ($task_list as $index => $task) {
+    $days_to_deadline = null;
+
+    if ($task['deadline'] != '') {
+        $deadline_timestamp = strtotime($task['deadline']);
+        $days_to_deadline = floor(($deadline_timestamp - $current_timestamp) / SECONDS_IN_DAY);
+    }
+
+    $task['is_important'] = false;
+
+    if (!is_null($days_to_deadline) && $days_to_deadline <= 1) {
+        $task['is_important'] = true;
+    }
+
+    $task_list[$index] = $task;
+}
+
+$filtered_task_list = [];
+// Проверка на существования параметра запроса с идентификатором проекта
+if (isset($_GET['task_id'])) {
+    $task_id = $_GET['task_id'];
+
+    foreach ($task_list as $task) {
+        if (($task['category'] == $task_id) || ($task_id == 'Все')){
+            array_push($filtered_task_list, $task);
+        }
+    }
+} else {
+    $filtered_task_list = $task_list;
+}
+
+if (!$filtered_task_list) {
+    http_response_code(404);
+}
+
 // Шаблон основного контента страницы
-$page_content = renderTemplate('templates/index.php', ['task_list' => $task_list]);
+$page_content = renderTemplate('templates/index.php', ['task_list' => $filtered_task_list]);
 
 // Шаблон лейаута страницы с включенным в него основным контентом страницы
 $layout_content = renderTemplate('templates/layout.php', [
