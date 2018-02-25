@@ -1,53 +1,83 @@
 <?php
 date_default_timezone_set('Europe/Moscow');
+define ('SECONDS_IN_DAY', 86400);
 
 // Подключение файла с функциями
 require_once('functions.php');
 
-// простой массив проектов
-$task_categories = ["Все", "Входящие", "Учеба", "Работа", "Домашние дела", "Авто"];
+$task_categories = [
+    [
+        'category_name' => 'Все',
+        'is_active' => true
+    ],
+    [
+        'category_name' => 'Входящие',
+        'is_active' => false
+    ],
+    [
+        'category_name' => 'Учеба',
+        'is_active' => false
+    ],
+    [
+        'category_name' => 'Работа',
+        'is_active' => false
+    ],
+    [
+        'category_name' => 'Домашние дела',
+        'is_active' => false
+    ],
+    [
+        'category_name' => 'Авто',
+        'is_active' => false
+    ]
+];
 
-// двумерный массив, каждый элемент которого содержит ассоциативный массив
 $task_list = [
     [
         'task_name' => 'Собеседование в IT компании',
         'deadline' => '01.06.2018',
         'category' => 'Работа',
-        'is_done' => false
+        'is_done' => false,
+        'is_important' => false
     ],
     [
         'task_name' => 'Выполнить тестовое задание',
         'deadline' => '25.05.2018',
         'category' => 'Работа',
-        'is_done' => false
+        'is_done' => false,
+        'is_important' => false
     ],
     [
         'task_name' => 'Сделать задание первого раздела',
         'deadline' => '21.04.2018',
         'category' => 'Учеба',
-        'is_done' => true
+        'is_done' => true,
+        'is_important' => false
     ],
     [
         'task_name' => 'Встреча с другом',
         'deadline' => '20.02.2018',
         'category' => 'Входящие',
-        'is_done' => false
+        'is_done' => false,
+        'is_important' => false
     ],
     [
         'task_name' => 'Купить корм для кота',
         'deadline' => '',
         'category' => 'Домашние дела',
-        'is_done' => false
+        'is_done' => false,
+        'is_important' => false
     ],
     [
         'task_name' => 'Заказать пиццу',
         'deadline' => '',
         'category' => 'Домашние дела',
-        'is_done' => false
+        'is_done' => false,
+        'is_important' => false
     ],
 ];
 
-define ('SECONDS_IN_DAY', 86400);
+
 $current_timestamp = time();
 // Выявление задач, до даты выполнения которых осталось меньше одного дня.
 foreach ($task_list as $index => $task) {
@@ -71,6 +101,16 @@ $filtered_task_list = [];
 // Проверка на существования параметра запроса с идентификатором проекта
 if (isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
+
+    foreach ($task_categories as $index => $category) {
+        $category['is_active'] = false;
+
+        if ($task_id == $category['category_name']) {
+            $category['is_active'] = true;
+        }
+
+        $task_categories[$index] = $category;
+    }
 
     foreach ($task_list as $task) {
         if (($task['category'] == $task_id) || ($task_id == 'Все')){
